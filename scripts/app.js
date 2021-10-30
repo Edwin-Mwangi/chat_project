@@ -2,6 +2,7 @@ const chatList = document.querySelector('.chat-list');
 const newChatForm = document.querySelector('.new-chat');
 const newNameForm = document.querySelector('.new-name');
 const updateMssg = document.querySelector('.update-mssg'); //in a div below
+const rooms = document.querySelector('.chatrooms');
 
 
 //submit message
@@ -26,6 +27,17 @@ newNameForm.addEventListener('submit', e => {
     setTimeout(() => updateMssg.innerText = '', 3000); //empty str after 3 s
 
 });
+
+//changing rooms
+rooms.addEventListener('click', e =>{
+    if(e.target.tagName === "BUTTON"){
+        chatUI.clear();
+        chatroom.updateRoom(e.target.getAttribute('id'));
+        chatroom.getChats(chat => chatUI.render(chat));
+
+    }
+});
+
 
 const username = localStorage.username? localStorage.username : "anon";
 //class instances
