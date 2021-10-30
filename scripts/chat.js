@@ -51,22 +51,4 @@ class Chatroom {
 
 };
 
-const chatroom = new Chatroom('gaming','shaun');
-// console.log(chatroom);
-/* chatroom.addChat('Hello Everybody')
-    .then(() => console.log('chat added'))
-    .catch(err => console.log(err)); */
 
-chatroom.getChats(data => console.log(data));
-
-/* chatroom.updateRoom('gaming');
-chatroom.getChats(data => console.log(data));
- */
-
-//to simulate user changing sites after some time
-setTimeout(() => {
-    chatroom.updateRoom('gaming');
-    chatroom.updateName('yosli');
-    chatroom.getChats(data => console.log(data));
-    chatroom.addChat('hello')
-},3000);//3000 ms as 2nd arg
