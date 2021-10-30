@@ -23,7 +23,11 @@ class Chatroom {
         return response;
     };
     getChats(callback){
-        this.chats.onSnapshot(snapshot =>{
+        this.chats
+        //complex queries to specify & order the data(where and orderby)
+        .where('room','==',this.room)
+        .orderBy('created_at')
+        .onSnapshot(snapshot =>{
             snapshot.docChanges().forEach(change =>{
                 if(change.type === 'added'){
                     //update the UI(to be done by another class)
