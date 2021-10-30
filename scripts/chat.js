@@ -8,7 +8,8 @@ class Chatroom {
     constructor(room, username){
         this.room = room;
         this.username = username;
-        this.chats = db.collection('chats')
+        this.chats = db.collection('chats');
+        this.unsub;
     }
     async addChat(message){
         const now = new Date();
@@ -23,8 +24,8 @@ class Chatroom {
         return response;
     };
     getChats(callback){
-        this.chats
-        //complex queries to specify & order the data(where and orderby)
+        this.unsub = this.chats
+            //complex queries to specify & order the data(where and orderby)
         .where('room','==',this.room)
         .orderBy('created_at')
         .onSnapshot(snapshot =>{
@@ -35,7 +36,19 @@ class Chatroom {
                 }
             });
         });
+    };
+    updateName(username){
+        this.username = username;
+    
     }
+    updateRoom(room){
+        this.room = room;
+        console.log('room updated');
+        if(this.unsub){
+            this.unsub();
+        }
+    }
+
 };
 
 const chatroom = new Chatroom('gaming','shaun');
@@ -45,3 +58,15 @@ const chatroom = new Chatroom('gaming','shaun');
     .catch(err => console.log(err)); */
 
 chatroom.getChats(data => console.log(data));
+
+/* chatroom.updateRoom('gaming');
+chatroom.getChats(data => console.log(data));
+ */
+
+//to simulate user changing sites after some time
+setTimeout(() => {
+    chatroom.updateRoom('gaming');
+    chatroom.updateName('yosli');
+    chatroom.getChats(data => console.log(data));
+    chatroom.addChat('hello')
+},3000);//3000 ms as 2nd arg
